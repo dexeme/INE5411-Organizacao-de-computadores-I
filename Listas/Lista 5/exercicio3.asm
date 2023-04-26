@@ -1,6 +1,6 @@
 # Diana Faustino de Siqueira
 # INE5411 – Organização de Computadores I
-# Lista de Exercícios 05 - Exercício 2
+# Lista de Exercícios 05 - Exercício 3
 
 # ENUNCIADO:
 
