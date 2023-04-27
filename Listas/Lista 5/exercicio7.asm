@@ -4,7 +4,7 @@
 
 # ENUNCIADO:
 
-#Considere que o processador MIPS está sendo utilizado para controlar 
+# Considere que o processador MIPS está sendo utilizado para controlar 
 # um conjunto de 32 dispositivos externos. 
 # Cada dispositivo recebe um bit indicando 
 # se ele deve ser ligado (=1) ou desligado (=0). 
@@ -24,12 +24,7 @@
 .globl main
 main:
 	li $s0, 1 # $s0, máscara de bits toda 1
-	li $v0, 5 # Lê inteiro
-	syscall
-	move $s1, $v0 # Coloca em $s1 (desligar/ligar) bit
-	
 	la $t0, maquina
-	
 	
 	inputOnOff:
 		li $v0, 5 # Lê inteiro
@@ -46,11 +41,11 @@ main:
 		move $s2, $v0 # Coloca em $s2 o bit a ser desligado
 		blt $s2, 0, desligarBit # Input inválido bit < 0
 		bgt $s2, 31, desligarBit # Input inválido bit > 32
-		lw $t1, 0($t0) # Carrega máquina
+		lw $t1, ($t0) # Carrega máquina
 		sllv $s0, $s0, $s2 #
 		not $s0, $s0
 		and $t1, $t1, $s0 # Desliga bit específico
-		sw $t1, 0($t0) # Guarda na memória de novo
+		sw $t1, ($t0) # Guarda na memória de novo
 		j printaResultado
 		
 	ligarBit:
@@ -59,6 +54,11 @@ main:
 		move $s3, $v0 # Coloca em $s3 o bit a ser ligado
 		blt $s2, 0, ligarBit # Input inválido bit < 0
 		bgt $s2, 31, ligarBit # Input inválido bit > 32
+		lw $t1, ($t0) # Carrega máquina
+		sllv $s0, $s0, $s2 # 
+		or $t1, $t1, $s0 # Desliga bit específico
+		sw $t1, ($t0) # Guarda na memória de novo
+		j printaResultado
 		
 		
 	printaResultado:
@@ -68,13 +68,3 @@ main:
 		
 		li $v0, 10
 		syscall
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
