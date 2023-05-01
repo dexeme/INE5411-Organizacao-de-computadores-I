@@ -5,14 +5,14 @@
 # ENUNCIADO:
 
 # Implemente um programa que chame um procedimento
-# para calcular as ra�zes de uma equa��o 
-# completa do segundo grau, na forma Ax2 + Bx + C = 0. 
-# Os coeficientes da equa��o, todos em ponto
-# flutuante de precis�o dupla, devem ser informados pelo
-# teclado e os valores das ra�zes devem ser apresentados no monitor.
+# para calcular as raízes de uma equação
+# completa do segundo grau, na forma Ax² + Bx + C = 0. 
+# Os coeficientes da equação, todos em ponto
+# flutuante de precisão dupla, devem ser informados pelo
+# teclado e os valores das raízes devem ser apresentados no monitor.
 
 .data
-	constants: .double -4 2
+	constants: .double -4 2 0
 	negativeDeltaPrint: .asciiz "Essa equação não possui raízes reais!"
 	oneRootPrint: .asciiz "Essa equação só tem 1 raíz real: "
 	twoRootsPrint: .asciiz "As duas raízes são: "
@@ -35,20 +35,21 @@ main:
 	# DELTA: B²-4.A.C
 	mul.d $f8, $f4, $f4 # B²
 	la $t0, constants
-	l.d $f10, 0($t0) # $f10 -> -4
+	l.d $f10, 0($t0)  # $f10 -> -4
 	
 	mul.d $f10, $f10, $f2
 	mul.d $f10, $f10, $f6    # $f8 -> Delta
 	add.d $f8, $f8, $f10
 	
-	mfc1.d $t1, $f8
-	blt $t1, 0, negativeDelta # Delta menor que zero
+	l.d $f22, 16($t0)
+	c.lt.d $f8, $f22       # Delta < 0?
+	bc1t negativeDelta
 	
 	# RAÍZES
-	# X¹ = -B + sqrt(DELTA)
+	# XÂ¹ = -B + sqrt(DELTA)
 	#      ----------------
 	#             2.A
-	# X² = -B - sqrt(DELTA)
+	# XÂ² = -B - sqrt(DELTA)
 	#      ----------------
 	#             2.A
 	
@@ -63,12 +64,14 @@ main:
 	add.d $f18, $f12, $f14 
 	div.d $f18, $f18, $f16   # $f18 -> x¹
 	
-	mfc1.d $t1, $f8
-	beq $t1, 0, singleRoot # Se delta = 0 só há 1 raíz
+	c.eq.d $f8, $f22       # Delta = 0?
+	bc1t singleRoot
 	
 	# ACHANDO X²
 	sub.d $f20, $f12, $f14
 	div.d $f20, $f20, $f16  # $f20 -> x²
+	
+	j twoRoots
 	
 	twoRoots:
 		la $a0, twoRootsPrint
