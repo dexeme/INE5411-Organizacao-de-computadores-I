@@ -24,21 +24,23 @@ main:
 		loop2_start:
 			bge		$t1, MAX, loop2_end   # se j >= MAX, sai do loop
 			
+			# Calculo do deslocamento para matriz A
 			mul $t2, $t0, MAX		      # t2 = i * MAX
 			add	$t2, $t2, $t1			  # t2 = t2 + j
 			mul $t2, $t2, DATA_SIZE 	  # t2 = t2 * DATA_SIZE
 			add $t2, $t2, $s0			  # t2 = t2 + end base de mat_a
 			
+			# Calculo do deslocamento para matriz B
 			mul $t3, $t1, MAX 			  # t3 = j * MAX
 			add $t3, $t3, $t0			  # t3 = t3 + i
 			mul $t3, $t3, DATA_SIZE 	  # t3 = t3 * DATA_SIZE
 			add $t3, $t3, $s1			  # t3 = t3 + end base de mat_b
 			
-			l.s		$f0, 0($t2)	          #	f0 = mat_a[t2]
-			l.s		$f1, 0($t3)	          # t5 = mat_b[t3]
-			add.s $f2, $f0, $f1           # t6 = t4 + t5
-			s.s		$f2, 0($t2)	          # mat_a[t2] = t6
-			
+			l.s		$f0, 0($t2)	          #	f0 = mat_a[t2] | carrega o valor da celula da matriz A
+			l.s		$f1, 0($t3)	          # t5 = mat_b[t3] | carrega o valor da celula da matriz B
+			add.s $f2, $f0, $f1           # t6 = t4 + t5   | soma das celulas 
+			s.s		$f2, 0($t2)	          # mat_a[t2] = t6 | store do resultado da soma na celula da matriz A
+			 
 			addi 	$t1, $t1, 1 		  # j++
 			j 		loop2_start 		  # volta para o inicio do loop2
 		loop2_end:
