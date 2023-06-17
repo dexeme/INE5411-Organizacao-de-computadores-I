@@ -8,7 +8,7 @@
 	.eqv MAX 4                                  # define MAX como 4
 	.eqv LEN 16                                 # define LEN como 16
 	.eqv DATA_SIZE 4                            # define DATA_SIZE como 4
-	.eqv block_size 2        					# define block_size como 2
+	.eqv block_size 2                           # define block_size como 2
 	mat_a: .float 1:LEN      					# cria matriz A sendo um vetor de floats com tamanho LEN
 	mat_b: .float 1:LEN      					# cria matriz B sendo um vetor de floats com tamanho LEN
 	
