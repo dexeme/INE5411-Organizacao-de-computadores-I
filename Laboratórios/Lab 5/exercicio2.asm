@@ -51,7 +51,7 @@ main:
 					# Soma das células das matrizes e store na memória
 					l.s	$f0, 0($t7)             # f0 = mat_a[ii][jj] | carrega o valor da célula da matriz A
 					l.s	$f1, 0($t8)             # f1 = mat_b[jj][ii] | carrega o valor da célula da matriz B
-					add.s $f2, $f0, $f1         # f2 = f0 + f1   | soma das células
+					add.s $f2, $f0, $f1         # f2 = f0 + f1       | soma das células
 					s.s	$f2, 0($t7)             # mat_a[ii][jj] = f2 | store do resultado da soma na célula da matriz A
 					
 					addi $t5, $t5, 1      	    # jj++

@@ -13,8 +13,8 @@
 	
 .text
 main:
-	li $t0, 0	                          # i = 0
-	li $t1, 0	  						  # j = 0
+	move $t0, $zero                       # i = 0
+	move $t1, $zero	  					  # j = 0
 	la $s0, mat_a 					 	  # s0 = endereço de mat_a
 	la $s1, mat_b 					      # s1 = endereço de mat_b
 	
